@@ -1,5 +1,13 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import { OrganizationalUnitEntity } from "./OrganizationalUnitEntity";
+import { NotificationEntity } from "./NotificationEntity";
 
 @Entity("users")
 export class UserEntity {
@@ -24,4 +32,7 @@ export class UserEntity {
   @ManyToOne(() => OrganizationalUnitEntity, (unit) => unit.users)
   @JoinColumn({ name: "organizationalUnitId" })
   organizationalUnit!: OrganizationalUnitEntity;
+
+  @OneToMany(() => NotificationEntity, (notification) => notification.user)
+  notifications!: NotificationEntity[];
 }
