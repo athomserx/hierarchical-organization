@@ -8,7 +8,8 @@
       "node"
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/app/*"],
+      "@environment/*": ["./src/environment/*"]
     },
   },
   "include": [
