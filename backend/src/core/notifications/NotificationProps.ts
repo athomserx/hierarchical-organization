@@ -1,4 +1,4 @@
-import { User } from "@/core/users/User";
+import { User } from "@/core/users/user";
 
 export interface NotificationProps {
   id: string;

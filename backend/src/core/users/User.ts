@@ -1,8 +1,8 @@
 import { OrganizationalUnit } from "@/core/organizational-units/OrganizationalUnit";
-import { UserProps } from "./UserProps";
+import { UserProps } from "./user.interface";
 
 export class User {
-  id: string;
+  id?: string;
   name: string;
   lastName: string;
   bloodType: string;
