@@ -1,4 +1,3 @@
-import sequelize from "@/config/db";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -10,18 +9,6 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const verifyDatabaseConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Connected to the database successfully.");
-  } catch (error) {
-    console.error("Error connecting to the database:", error);
-    process.exit(1);
-  }
-};
-
-verifyDatabaseConnection();
 
 // Routes
 // app.use("/api/products", productRoutes);

@@ -29,6 +29,9 @@ export class UserEntity {
   @Column({ type: "uuid" })
   organizationalUnitId!: string;
 
+  @Column()
+  passwordHash!: string;
+
   @ManyToOne(() => OrganizationalUnitEntity, (unit) => unit.users)
   @JoinColumn({ name: "organizationalUnitId" })
   organizationalUnit!: OrganizationalUnitEntity;

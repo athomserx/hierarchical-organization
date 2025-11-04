@@ -7,8 +7,8 @@
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
     "typeorm": "typeorm-ts-node-esm",
-    "migration:generate": "npx ts-node ./node_modules/.bin/typeorm migration:generate -d ./src/infrastructure/persistence/AppDataSource.ts ./src/infrastructure/persistence/migrations/InitialMigration",
-    "migration:run": "npx ts-node ./node_modules/.bin/typeorm migration:run -d ./src/infrastructure/persistence/AppDataSource.ts",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/infrastructure/persistence/AppDataSource.ts ./src/infrastructure/persistence/migrations/InitialMigration",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/infrastructure/persistence/AppDataSource.ts",
     "migration:revert": "npx ts-node ./node_modules/.bin/typeorm migration:revert -- -d ./src/infrastructure/persistence/AppDataSource.ts",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
