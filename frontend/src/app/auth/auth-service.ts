@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { API_URL } from '@/constants/injection-tokens';
 import { LoginCredentials, AuthTokenResponse } from '@/auth/auth.interface';
 import { TOKEN_STORAGE_KEY } from '@/constants/storage-keys';
@@ -18,7 +18,13 @@ export class AuthService {
   };
 
   login(user: LoginCredentials): Observable<AuthTokenResponse> {
-    return this.http.post<AuthTokenResponse>(`${this.apiUrl}/login`, user);
+    return this.http.post<AuthTokenResponse>(`${this.apiUrl}/login`, user).pipe(
+      catchError((error) => {
+        console.error('There was an error while trying to login', error);
+
+        throw new Error(error);
+      }),
+    );
   }
 
   logout() {

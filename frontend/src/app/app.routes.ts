@@ -6,8 +6,9 @@ import { Home } from './presentation/pages/home/home';
 
 export const routes: Routes = [
   {
-    path: 'login',
-    component: Login,
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
     path: '',
@@ -21,7 +22,11 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'login',
+    component: Login,
+  },
+  {
     path: '**',
-    redirectTo: 'company/dashboard',
+    redirectTo: 'home',
   },
 ];

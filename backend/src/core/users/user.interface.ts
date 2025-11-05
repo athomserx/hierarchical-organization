@@ -6,6 +6,7 @@ export interface UserProps {
   lastName: string;
   bloodType: string;
   email: string;
+  passwordHash: string;
   organizationalUnit: OrganizationalUnit;
 }
 

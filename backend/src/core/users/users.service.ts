@@ -49,6 +49,8 @@ export class UsersService {
     // return this.usersRepository.findById(id);
   }
 
+  public async findUserByUserName(userName: string): Promise<User> {}
+
   // TODO
   // public async updateUser(
   //   userId: string,

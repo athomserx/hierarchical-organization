@@ -1,7 +1,6 @@
 import { UserEntity } from "@/infrastructure/persistence/entities/UserEntity";
 import { IRepository } from "@/shared/contracts/IRepository";
 import { User } from "./user";
-import { UserRequestDto } from "./user.interface";
 import db from "@/infrastructure/persistence/AppDataSource";
 
 export class UsersRepository implements IRepository<UserEntity, User> {
@@ -14,6 +13,7 @@ export class UsersRepository implements IRepository<UserEntity, User> {
       lastName: entity.lastName,
       email: entity.email,
       bloodType: entity.bloodType,
+      passwordHash: entity.passwordHash,
       organizationalUnit: entity.organizationalUnit,
     });
   }
@@ -23,14 +23,14 @@ export class UsersRepository implements IRepository<UserEntity, User> {
       name: user.name,
       lastName: user.lastName,
       email: user.email,
+      passwordHash: user.passwordHash,
       bloodType: user.bloodType,
       organizationalUnitId: user.organizationalUnit.id,
     });
   }
 
-  async create(user: User, passwordHash: string) {
+  async create(user: User) {
     const userEntity = this.toPersistence(user);
-    userEntity.passwordHash = passwordHash;
 
     const userCreated = await this.userRepo.insert(userEntity);
 
