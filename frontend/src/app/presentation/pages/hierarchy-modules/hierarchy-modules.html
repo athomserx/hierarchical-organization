@@ -52,20 +52,24 @@
                   <td
                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-6"
                   >
-                    <button
-                      (click)="editModule(module.id)"
-                      class="text-indigo-600 hover:text-indigo-900 mr-4 transition duration-150 ease-in-out cursor-pointer"
-                      aria-label="Edit module"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      (click)="deleteModule(module.id)"
-                      class="text-red-600 hover:text-red-900 transition duration-150 ease-in-out cursor-pointer"
-                      aria-label="Delete module"
-                    >
-                      Delete
-                    </button>
+                    @if (canEditModule()) {
+                      <button
+                        (click)="editModule(module.id)"
+                        class="text-indigo-600 hover:text-indigo-900 mr-4 transition duration-150 ease-in-out cursor-pointer"
+                        aria-label="Edit module"
+                      >
+                        Edit
+                      </button>
+                    }
+                    @if (canDeleteModule()) {
+                      <button
+                        (click)="deleteModule(module.id)"
+                        class="text-red-600 hover:text-red-900 transition duration-150 ease-in-out cursor-pointer"
+                        aria-label="Delete module"
+                      >
+                        Delete
+                      </button>
+                    }
                   </td>
                 </tr>
               }

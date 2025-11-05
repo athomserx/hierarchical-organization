@@ -4,3 +4,5 @@ export interface OrganizationModule {
   parentId: string;
   permissions: string[];
 }
+
+export type OrganizationModuleSubmit = Omit<OrganizationModule, 'id'>;

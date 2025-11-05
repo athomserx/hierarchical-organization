@@ -4,11 +4,12 @@ import { MainLayout } from './presentation/layouts/main-layout/main-layout';
 import { authGuard } from './auth/auth-guard';
 import { HierarchyModules } from './presentation/pages/hierarchy-modules/hierarchy-modules';
 import { Users } from './presentation/pages/users/users';
+import { EditHierarchyModule } from './presentation/pages/edit-hierarchy-module/edit-hierarchy-module';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'modules',
     pathMatch: 'full',
   },
   {
@@ -17,8 +18,12 @@ export const routes: Routes = [
     canActivate: [],
     children: [
       {
-        path: 'home',
+        path: 'modules',
         component: HierarchyModules,
+      },
+      {
+        path: 'modules/edit/:id',
+        component: EditHierarchyModule,
       },
       {
         path: 'users',
@@ -32,6 +37,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'modules',
   },
 ];

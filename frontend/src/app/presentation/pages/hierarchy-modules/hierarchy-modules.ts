@@ -1,8 +1,10 @@
 import { PERMISSIONS } from '@/constants/permissions';
 import { OrganizationModule } from '@/interfaces/modules.interface';
 import { ModulesService } from '@/services/api/modules.service';
+import { PermissionsService } from '@/services/permissions.service';
 import { NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hierarchy-modules',
@@ -13,8 +15,20 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 export class HierarchyModules implements OnInit {
   modules = signal<OrganizationModule[]>([]);
   errorMsg = signal<string>('');
+  canEditModule = signal(false);
+  canDeleteModule = signal(false);
 
   modulesService = inject(ModulesService);
+  permissionsService = inject(PermissionsService);
+  router = inject(Router);
+
+  constructor() {
+    // this.canEditModule.set(this.permissionsService.hasPermission(PERMISSIONS.EDIT_HIERARCHY));
+    // this.canDeleteModule.set(this.permissionsService.hasPermission(PERMISSIONS.DELETE_HIERARCHY));
+    // TODO revert this
+    this.canEditModule.set(true);
+    this.canDeleteModule.set(true);
+  }
 
   ngOnInit(): void {
     const testRegister = {
@@ -35,13 +49,13 @@ export class HierarchyModules implements OnInit {
     return permissionsString;
   }
 
-  editModule(moduleId: string) {}
-
-  canDeleteModule(moduleId: string) {}
+  editModule(moduleId: string) {
+    this.router.navigate(['/modules/edit', moduleId]);
+  }
 
   deleteModule(moduleId: string) {
     this.errorMsg.set('');
-    this.modulesService.deleteOrganizationModule(moduleId).subscribe({
+    this.modulesService.delete(moduleId).subscribe({
       next: () => {
         this.modules.update((current) => current.filter((elem) => elem.id !== moduleId));
       },

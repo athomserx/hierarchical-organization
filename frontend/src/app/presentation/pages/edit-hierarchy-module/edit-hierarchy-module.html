@@ -1,0 +1,83 @@
+<div class="max-w-xl mx-auto p-6 bg-white shadow-xl rounded-lg mt-10">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">
+    @if (isEditionMode()) {
+      Editar módulo
+    } @else {
+      Crear módulo
+    }
+  </h2>
+
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+    <div class="mb-5">
+      <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+        Nombre <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="moduleName"
+        required
+        #nameField="ngModel"
+        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm transition duration-150 ease-in-out"
+        [ngClass]="{
+          'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500':
+            nameField.valid || nameField.pristine,
+          'border-red-500 focus:ring-red-500 focus:border-red-500':
+            nameField.invalid && nameField.dirty,
+        }"
+      />
+      @if (nameField.invalid && (nameField.dirty || nameField.touched)) {
+        <div class="mt-1 text-sm text-red-600">
+          @if (nameField.errors?.['required']) {
+            <p>Este campo es requerido.</p>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="mb-6">
+      <span class="block text-sm font-medium text-gray-700 mb-3"> Permisos </span>
+
+      <div class="space-y-3 p-4 border border-gray-200 rounded-md bg-gray-50">
+        @for (permission of userPermissions(); track permission.id) {
+          <div class="relative flex items-start">
+            <div class="flex items-center h-5">
+              <input
+                id="permission-{{ permission.id }}"
+                name="permission-{{ permission.id }}"
+                type="checkbox"
+                [checked]="isPermissionSelected(permission.id)"
+                (change)="onPermissionChange(permission.id, $event)"
+                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+              />
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="permission-{{ permission.id }}" class="font-medium text-gray-700">
+                {{ permission.name }}
+              </label>
+            </div>
+          </div>
+        }
+
+        @if (!userPermissions() || userPermissions().length === 0) {
+          <div class="text-sm text-gray-500 italic">No hay permisos disponibles para mostrar</div>
+        }
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        [disabled]="userForm.invalid"
+        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out disabled:opacity-50"
+      >
+        @if (isEditionMode()) {
+          Guardar cambios
+        } @else {
+          Crear módulo
+        }
+      </button>
+    </div>
+  </form>
+</div>
