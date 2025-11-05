@@ -40,8 +40,6 @@ export class Login {
   }
 
   private getErrorMessage(error: HttpErrorResponse): string {
-    console.error('Login Error:', error);
-
     if (error.status === 401 || error.status === 403) {
       return 'Credenciales inválidas';
     } else if (error.status >= 500) {

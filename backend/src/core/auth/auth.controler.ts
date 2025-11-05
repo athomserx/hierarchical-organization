@@ -16,7 +16,7 @@ export class AuthController {
   }
 
   private initializeRoutes() {
-    this.router.post("/", this.login);
+    this.router.post("/login", this.login.bind(this));
   }
 
   public async login(req: Request, res: Response): Promise<Response> {
@@ -55,7 +55,7 @@ export class AuthController {
 
       return res
         .status(500)
-        .json({ message: "There was an error while trying to login" });
+        .json({ message: "There was an error while trying to login", error });
     }
   }
 }

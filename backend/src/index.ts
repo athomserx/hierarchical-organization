@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import "reflect-metadata";
 import { UsersController } from "./core/users/user.controller";
 import { AuthController } from "./core/auth/auth.controler";
 import { authGuard } from "./middlewares/auth.middleware";
+import "reflect-metadata";
 
 dotenv.config();
 

@@ -3,9 +3,14 @@ import { IRepository } from "@/shared/contracts/IRepository";
 import { User } from "./user";
 import db from "@/infrastructure/persistence/AppDataSource";
 import { NotFoundException } from "@/shared/exceptions/NotFoundException";
+import { Repository } from "typeorm";
 
 export class UsersRepository implements IRepository<UserEntity, User> {
-  userRepo = db.getRepository(UserEntity);
+  userRepo: Repository<UserEntity>;
+
+  constructor() {
+    this.userRepo = db.getRepository(UserEntity);
+  }
 
   toDomain(entity: UserEntity): User {
     return new User({
