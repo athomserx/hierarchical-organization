@@ -12,10 +12,10 @@ export class NotificationEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   message!: string;
 
-  @Column({ default: false })
+  @Column({ default: false, type: "bool" })
   read!: boolean;
 
   @Column({

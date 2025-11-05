@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { UsersRepository } from "./users.repository";
-import { NotificationsService } from "./notifications.service";
-import { HierarchyService } from "./hierarchy.service";
+// import { NotificationsService } from "./notifications.service";
+// import { HierarchyService } from "./hierarchy.service";
 // import { User, UserUpdateData } from "./user.interface";
 import { UserRequestDto } from "./user.interface";
 import { User } from "./user";
@@ -11,45 +11,49 @@ const SALT_ROUNDS = 10;
 
 export class UsersService {
   private usersRepository: UsersRepository;
-  private notificationsService: NotificationsService;
-  private hierarchyService: HierarchyService;
+  // private notificationsService: NotificationsService;
+  // private hierarchyService: HierarchyService;
 
   constructor() {
     this.usersRepository = new UsersRepository();
-    this.notificationsService = new NotificationsService();
-    this.hierarchyService = new HierarchyService();
+    // this.notificationsService = new NotificationsService();
+    // this.hierarchyService = new HierarchyService();
   }
 
-  public async createUser(
-    userData: UserRequestDto
-  ): Promise<Omit<User, "password_hash">> {
-    const hashedPassword = await bcrypt.hash(userData.password, SALT_ROUNDS);
+  // public async createUser(
+  //   userData: UserRequestDto
+  // ): Promise<Omit<User, "password_hash">> {
+  //   const hashedPassword = await bcrypt.hash(userData.password, SALT_ROUNDS);
 
-    const newUser = await this.usersRepository.create(
-      new User({
-        name: userData.name,
-        lastName: userData.lastName,
-        email: userData.email,
-        bloodType: userData.bloodType,
-        OrganizationalUnitId: userData.organizationalUnitId,
-      }),
-      hashedPassword
-    );
+  //   const newUser = await this.usersRepository.create(
+  //     new User({
+  //       name: userData.name,
+  //       lastName: userData.lastName,
+  //       email: userData.email,
+  //       bloodType: userData.bloodType,
+  //       OrganizationalUnitId: userData.organizationalUnitId,
+  //     }),
+  //     hashedPassword
+  //   );
 
-    return newUser;
-  }
+  //   return newUser;
+  // }
 
   public async findAllUsers() {
     // TODO
     // return this.usersRepository.findAll();
   }
 
-  public async findUserById(id: string) {
-    // TODO
-    // return this.usersRepository.findById(id);
-  }
+  // public async findUserById(id: string): Promise<User> {
+  //   // TODO
+  //   // return this.usersRepository.findById(id);
+  // }
 
-  public async findUserByUserName(userName: string): Promise<User> {}
+  public async findUserByEmail(email: string): Promise<User> {
+    const user = await this.usersRepository.getByEmail(email);
+
+    return user;
+  }
 
   // TODO
   // public async updateUser(
@@ -85,18 +89,18 @@ export class UsersService {
   //   return this.usersRepository.update(userId, updateData);
   // }
 
-  public async calculateUserPermissions(userId: string): Promise<string[]> {
-    // TODO
-    const user = await this.usersRepository.findById(userId);
+  // public async calculateUserPermissions(userId: string): Promise<string[]> {
+  //   // TODO
+  //   const user = await this.usersRepository.findById(userId);
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+  //   if (!user) {
+  //     throw new Error("User not found");
+  //   }
 
-    const unitId = user.organizational_unit_id;
-    const inheritedPermissions =
-      await this.hierarchyService.getInheritedPermissionsForUnit(unitId);
+  //   const unitId = user.organizational_unit_id;
+  //   const inheritedPermissions =
+  //     await this.hierarchyService.getInheritedPermissionsForUnit(unitId);
 
-    return inheritedPermissions;
-  }
+  //   return inheritedPermissions;
+  // }
 }

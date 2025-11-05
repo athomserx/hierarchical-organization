@@ -2,6 +2,7 @@ import { UserEntity } from "@/infrastructure/persistence/entities/UserEntity";
 import { IRepository } from "@/shared/contracts/IRepository";
 import { User } from "./user";
 import db from "@/infrastructure/persistence/AppDataSource";
+import { NotFoundException } from "@/shared/exceptions/NotFoundException";
 
 export class UsersRepository implements IRepository<UserEntity, User> {
   userRepo = db.getRepository(UserEntity);
@@ -29,10 +30,23 @@ export class UsersRepository implements IRepository<UserEntity, User> {
     });
   }
 
-  async create(user: User) {
+  async create(user: User): Promise<User> {
     const userEntity = this.toPersistence(user);
+    const userCreated = await this.userRepo.save(userEntity);
 
-    const userCreated = await this.userRepo.insert(userEntity);
+    return this.toDomain(userCreated);
+  }
+
+  async getByEmail(email: string): Promise<User> {
+    const userEntity = await this.userRepo.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!userEntity) {
+      throw new NotFoundException("user");
+    }
 
     return this.toDomain(userEntity);
   }

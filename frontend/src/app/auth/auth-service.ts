@@ -18,7 +18,7 @@ export class AuthService {
   };
 
   login(user: LoginCredentials): Observable<AuthTokenResponse> {
-    return this.http.post<AuthTokenResponse>(`${this.apiUrl}/login`, user).pipe(
+    return this.http.post<AuthTokenResponse>(`${this.apiUrl}/auth/login`, user).pipe(
       catchError((error) => {
         console.error('There was an error while trying to login', error);
 

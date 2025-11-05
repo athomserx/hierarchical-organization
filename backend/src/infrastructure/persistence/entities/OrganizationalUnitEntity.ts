@@ -15,7 +15,7 @@ export class OrganizationalUnitEntity {
   @PrimaryColumn({ type: "uuid" })
   id!: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   name!: string;
 
   @Column({ type: "uuid", nullable: true })

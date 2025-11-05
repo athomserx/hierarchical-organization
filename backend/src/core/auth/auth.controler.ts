@@ -29,7 +29,7 @@ export class AuthController {
     }
 
     try {
-      const user = await this.usersService.findUserByUserName(email);
+      const user = await this.usersService.findUserByEmail(email);
 
       if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });

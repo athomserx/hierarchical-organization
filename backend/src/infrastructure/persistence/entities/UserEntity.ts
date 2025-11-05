@@ -14,22 +14,22 @@ export class UserEntity {
   @PrimaryColumn({ type: "uuid" })
   id!: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   name!: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   lastName!: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   bloodType!: string;
 
-  @Column({ unique: true })
+  @Column({ type: "varchar", unique: true })
   email!: string;
 
   @Column({ type: "uuid" })
   organizationalUnitId!: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   passwordHash!: string;
 
   @ManyToOne(() => OrganizationalUnitEntity, (unit) => unit.users)
