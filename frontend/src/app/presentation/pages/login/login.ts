@@ -1,4 +1,7 @@
 import { AuthService } from '@/auth/auth-service';
+import { USER_CLAIMS_STORAGE_KEY } from '@/constants/storage-keys';
+import { NotAuthorized } from '@/presentation/components/not-authorized/not-authorized';
+import { LocalStorageService } from '@/services/local-storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +9,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, NotAuthorized],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -17,6 +20,7 @@ export class Login {
   isLoading = signal<boolean>(false);
 
   private authService = inject(AuthService);
+  private localStorageService = inject(LocalStorageService);
   private router = inject(Router);
 
   login() {
@@ -24,6 +28,7 @@ export class Login {
     this.authService.login({ email: this.email(), password: this.password() }).subscribe({
       next: (data) => {
         this.authService.setToken(data.token);
+        this.localStorageService.setJSON(USER_CLAIMS_STORAGE_KEY, data.userClaims);
 
         this.router.navigateByUrl('/');
       },

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { NotificationMessage } from '@/interfaces/notification.interface';
+import { NotificationMessage } from '@/interfaces/notifications.interface';
 import { Observable, repeat, retry, timer } from 'rxjs';
 import { API_URL } from '@/constants/injection-tokens';
 import { HttpClient } from '@angular/common/http';

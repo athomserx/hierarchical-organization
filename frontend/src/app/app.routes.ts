@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { Login } from './presentation/pages/login/login';
 import { MainLayout } from './presentation/layouts/main-layout/main-layout';
 import { authGuard } from './auth/auth-guard';
-import { Home } from './presentation/pages/home/home';
+import { HierarchyModules } from './presentation/pages/hierarchy-modules/hierarchy-modules';
+import { Users } from './presentation/pages/users/users';
 
 export const routes: Routes = [
   {
@@ -13,11 +14,15 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
-    canActivate: [authGuard],
+    canActivate: [],
     children: [
       {
         path: 'home',
-        component: Home,
+        component: HierarchyModules,
+      },
+      {
+        path: 'users',
+        component: Users,
       },
     ],
   },

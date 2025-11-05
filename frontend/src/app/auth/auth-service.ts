@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, Observable } from 'rxjs';
 import { API_URL } from '@/constants/injection-tokens';
-import { LoginCredentials, AuthTokenResponse } from '@/auth/auth.interface';
+import { LoginCredentials, AuthResponse } from '@/auth/auth.interface';
 import { TOKEN_STORAGE_KEY } from '@/constants/storage-keys';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class AuthService {
     sameSite: 'Lax' as const,
   };
 
-  login(user: LoginCredentials): Observable<AuthTokenResponse> {
-    return this.http.post<AuthTokenResponse>(`${this.apiUrl}/auth/login`, user).pipe(
+  login(user: LoginCredentials): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, user).pipe(
       catchError((error) => {
         console.error('There was an error while trying to login', error);
 

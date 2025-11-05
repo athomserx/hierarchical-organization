@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Home } from './home';
+import { HierarchyModules } from './hierarchy-modules';
 
-describe('Home', () => {
-  let component: Home;
-  let fixture: ComponentFixture<Home>;
+describe('HierarchyModules', () => {
+  let component: HierarchyModules;
+  let fixture: ComponentFixture<HierarchyModules>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Home]
+      imports: [HierarchyModules]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Home);
+    fixture = TestBed.createComponent(HierarchyModules);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
