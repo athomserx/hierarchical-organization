@@ -1,0 +1,39 @@
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
+import { API_URL } from '@/constants/injection-tokens';
+import { LoginCredentials, AuthTokenResponse } from '@/auth/auth.interface';
+import { TOKEN_STORAGE_KEY } from '@/constants/storage-keys';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  private http = inject(HttpClient);
+  private apiUrl = inject(API_URL);
+  private cookies = inject(CookieService);
+  private readonly cookieOptions = {
+    sameSite: 'Lax' as const,
+  };
+
+  login(user: LoginCredentials): Observable<AuthTokenResponse> {
+    return this.http.post<AuthTokenResponse>(`${this.apiUrl}/login`, user);
+  }
+
+  logout() {
+    this.cookies.delete(TOKEN_STORAGE_KEY);
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  setToken(token: string) {
+    this.cookies.set(TOKEN_STORAGE_KEY, token, this.cookieOptions);
+  }
+
+  getToken() {
+    return this.cookies.get(TOKEN_STORAGE_KEY);
+  }
+}

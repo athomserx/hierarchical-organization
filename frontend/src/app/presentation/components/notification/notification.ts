@@ -1,4 +1,4 @@
-import { NotificationService } from '@/services/notification.service';
+import { NotificationService } from '@/data/services/notification.service';
 import { ApplicationRef, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { filter, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { NotificationMessage } from '@/interfaces/notification.interface';
