@@ -23,22 +23,14 @@ export class HierarchyModules implements OnInit {
   router = inject(Router);
 
   constructor() {
-    // this.canEditModule.set(this.permissionsService.hasPermission(PERMISSIONS.EDIT_HIERARCHY));
-    // this.canDeleteModule.set(this.permissionsService.hasPermission(PERMISSIONS.DELETE_HIERARCHY));
-    // TODO revert this
-    this.canEditModule.set(true);
-    this.canDeleteModule.set(true);
+    this.canEditModule.set(this.permissionsService.hasPermission(PERMISSIONS.EDIT_HIERARCHY));
+    this.canDeleteModule.set(this.permissionsService.hasPermission(PERMISSIONS.DELETE_HIERARCHY));
   }
 
   ngOnInit(): void {
-    const testRegister = {
-      id: '1',
-      name: 'Departamento',
-      permissions: [PERMISSIONS.DELETE_USERS],
-      parentId: '1',
-    };
-
-    this.modules.set([testRegister]);
+    this.modulesService.getAll().subscribe({
+      next: (modules) => this.modules.set(modules),
+    });
   }
 
   getPermissionsString(permissions: string[]) {
