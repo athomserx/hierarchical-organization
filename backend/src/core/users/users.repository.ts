@@ -6,10 +6,10 @@ import { Repository } from "typeorm";
 import { User } from "./user";
 
 export class UsersRepository implements IRepository<UserEntity, User> {
-  userRepo: Repository<UserEntity>;
+  repo: Repository<UserEntity>;
 
   constructor() {
-    this.userRepo = db.getRepository(UserEntity);
+    this.repo = db.getRepository(UserEntity);
   }
 
   toDomain(entity: UserEntity): User {
@@ -25,7 +25,7 @@ export class UsersRepository implements IRepository<UserEntity, User> {
   }
 
   toPersistence(user: User): UserEntity {
-    return this.userRepo.create({
+    return this.repo.create({
       name: user.name,
       lastName: user.lastName,
       email: user.email,
@@ -37,13 +37,13 @@ export class UsersRepository implements IRepository<UserEntity, User> {
 
   async create(user: User): Promise<User> {
     const userEntity = this.toPersistence(user);
-    const userCreated = await this.userRepo.save(userEntity);
+    const userCreated = await this.repo.save(userEntity);
 
     return this.toDomain(userCreated);
   }
 
   async getByEmail(email: string): Promise<User> {
-    const userEntity = await this.userRepo.findOne({
+    const userEntity = await this.repo.findOne({
       where: {
         email: email,
       },
@@ -60,7 +60,7 @@ export class UsersRepository implements IRepository<UserEntity, User> {
   }
 
   async getById(id: string): Promise<User> {
-    const userEntity = await this.userRepo.findOne({
+    const userEntity = await this.repo.findOne({
       where: {
         id: id,
       },
