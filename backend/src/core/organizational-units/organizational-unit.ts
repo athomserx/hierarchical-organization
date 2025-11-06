@@ -1,4 +1,4 @@
-import { OrganizationalUnitProps } from "./OrganizationalUnitProps";
+import { OrganizationalUnitProps } from "./organizational-unit.interface";
 
 export class OrganizationalUnit {
   id: string;

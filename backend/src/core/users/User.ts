@@ -1,5 +1,5 @@
 import * as bcrypt from "bcryptjs";
-import { OrganizationalUnit } from "@/core/organizational-units/OrganizationalUnit";
+import { OrganizationalUnit } from "@/core/organizational-units/organizational-unit";
 import { UserProps } from "./user.interface";
 
 export class User {

@@ -26,6 +26,10 @@ export const routes: Routes = [
         component: EditHierarchyModule,
       },
       {
+        path: 'modules/new',
+        component: EditHierarchyModule,
+      },
+      {
         path: 'users',
         component: Users,
       },

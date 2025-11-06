@@ -1,4 +1,4 @@
-import { OrganizationalUnit } from "@/core/organizational-units/OrganizationalUnit";
+import { OrganizationalUnit } from "@/core/organizational-units/organizational-unit";
 
 export interface UserProps {
   id?: string;

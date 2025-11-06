@@ -4,11 +4,11 @@ import { ModulesService } from '@/services/api/modules.service';
 import { PermissionsService } from '@/services/permissions.service';
 import { NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-hierarchy-modules',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './hierarchy-modules.html',
   styleUrl: './hierarchy-modules.scss',
 })
@@ -39,10 +39,6 @@ export class HierarchyModules implements OnInit {
     });
 
     return permissionsString;
-  }
-
-  editModule(moduleId: string) {
-    this.router.navigate(['/modules/edit', moduleId]);
   }
 
   deleteModule(moduleId: string) {

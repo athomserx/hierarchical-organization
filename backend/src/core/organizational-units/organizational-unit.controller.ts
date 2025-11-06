@@ -13,6 +13,13 @@ export class OrganizationalUnitController {
     this.router.get("/", this.getAvailableModules);
   }
 
+  //   export interface OrganizationModule {
+  //   id: string;
+  //   name: string;
+  //   parentId: string;
+  //   permissions: string[];
+  // }
+
   public getAvailableModules(req: UserRequest, res: Response) {
     console.log(req.user);
   }

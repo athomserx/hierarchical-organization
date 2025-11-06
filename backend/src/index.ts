@@ -6,7 +6,7 @@ import { AuthController } from "./core/auth/auth.controler";
 import { authGuard } from "./middlewares/auth.middleware";
 import "reflect-metadata";
 import db from "./infrastructure/persistence/AppDataSource";
-import { OrganizationalUnitController } from "./core/organizational-units/OrganizationalUnitController";
+import { OrganizationalUnitController } from "./core/organizational-units/organizational-unit.controller";
 
 dotenv.config();
 
