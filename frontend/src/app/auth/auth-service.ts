@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { API_URL } from '@/constants/injection-tokens';
 import { LoginCredentials, AuthResponse } from '@/auth/auth.interface';
 import { TOKEN_STORAGE_KEY } from '@/constants/storage-keys';
@@ -25,9 +25,7 @@ export class AuthService {
   }
 
   logout() {
-    return of(() => {
-      this.localStorageService.removeItem(TOKEN_STORAGE_KEY);
-    });
+    return of(null).pipe(tap(() => this.localStorageService.removeItem(TOKEN_STORAGE_KEY)));
   }
 
   isLoggedIn(): boolean {
