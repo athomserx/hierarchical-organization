@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { UsersService } from "./users.service";
+import { UserRequest } from "@/shared/interfaces/user-request";
 
 export class UsersController {
   private usersService: UsersService;
@@ -12,12 +13,12 @@ export class UsersController {
   }
 
   private initializeRoutes() {
-    this.router.get("/", this.getAllUsers);
-    this.router.post("/", this.createUser);
-    this.router.get("/:id", this.getUserById);
-    this.router.put("/:id", this.updateUser);
+    // this.router.get("/", this.getAllUsers);
+    // this.router.post("/", this.createUser);
+    // this.router.get("/:id", this.getUserById);
+    // this.router.put("/:id", this.updateUser);
 
-    this.router.get("/:id/permissions", this.getUserPermissions);
+    this.router.get("/permissions", this.getUserPermissions.bind(this));
   }
 
   public createUser = async (
@@ -88,19 +89,22 @@ export class UsersController {
     // }
   };
 
-  public getUserPermissions = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    // try {
-    //   const userId = req.params.id;
-    //   const permissions = await this.usersService.calculateUserPermissions(
-    //     userId
-    //   );
-    //   res.status(200).json({ userId, permissions });
-    // } catch (error) {
-    //   next(error);
-    // }
-  };
+  public async getUserPermissions(req: UserRequest, res: Response) {
+    const user = req.user;
+
+    try {
+      const permissions = await this.usersService.calculateUserPermissions(
+        user?.id!
+      );
+
+      res.status(200).json(permissions);
+    } catch (error) {
+      console.error("Error while getting the user permissions", error);
+
+      return res.status(500).json({
+        message: "There was an error while trying to get the user permissions",
+        error,
+      });
+    }
+  }
 }

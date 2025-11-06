@@ -16,13 +16,6 @@ export class OrganizationalUnitController {
     this.router.get("/", this.getAvailableModules.bind(this));
   }
 
-  //   export interface OrganizationModule {
-  //   id: string;
-  //   name: string;
-  //   parentId: string;
-  //   permissions: string[];
-  // }
-
   public async getAvailableModules(req: UserRequest, res: Response) {
     const user = req.user;
 

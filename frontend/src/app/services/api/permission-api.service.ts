@@ -12,6 +12,6 @@ export class PermissionApiService {
   private http = inject(HttpClient);
 
   getUserPermissions(): Observable<Permission[]> {
-    return this.http.get<Permission[]>(`${this.apiUrl}/permissions`);
+    return this.http.get<Permission[]>(`${this.apiUrl}/users/permissions`);
   }
 }

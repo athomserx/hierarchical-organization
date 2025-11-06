@@ -5,17 +5,21 @@ import { UsersRepository } from "./users.repository";
 // import { User, UserUpdateData } from "./user.interface";
 import { UserRequestDto } from "./user.interface";
 import { User } from "./user";
+import { Permission } from "../permissions/Permission";
+import { PermissionsRepository } from "../permissions/permissions.repository";
 
 // Hashing cost; the higher, the safer but slower
 const SALT_ROUNDS = 10;
 
 export class UsersService {
   private usersRepository: UsersRepository;
+  private permissionsRepository: PermissionsRepository;
   // private notificationsService: NotificationsService;
   // private hierarchyService: HierarchyService;
 
   constructor() {
     this.usersRepository = new UsersRepository();
+    this.permissionsRepository = new PermissionsRepository();
     // this.notificationsService = new NotificationsService();
     // this.hierarchyService = new HierarchyService();
   }
@@ -95,18 +99,17 @@ export class UsersService {
   //   return this.usersRepository.update(userId, updateData);
   // }
 
-  // public async calculateUserPermissions(userId: string): Promise<string[]> {
-  //   // TODO
-  //   const user = await this.usersRepository.findById(userId);
+  public async calculateUserPermissions(userId: string): Promise<Permission[]> {
+    const user = await this.usersRepository.getById(userId);
 
-  //   if (!user) {
-  //     throw new Error("User not found");
-  //   }
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-  //   const unitId = user.organizational_unit_id;
-  //   const inheritedPermissions =
-  //     await this.hierarchyService.getInheritedPermissionsForUnit(unitId);
+    const userPermissions = await this.permissionsRepository.getUserPermissions(
+      userId
+    );
 
-  //   return inheritedPermissions;
-  // }
+    return userPermissions;
+  }
 }
