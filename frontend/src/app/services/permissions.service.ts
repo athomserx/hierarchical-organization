@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { USER_CLAIMS_STORAGE_KEY } from '@/constants/storage-keys';
 import { Observable, throwError } from 'rxjs';
+import { Permission } from '@/interfaces/permissions.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,21 +10,23 @@ import { Observable, throwError } from 'rxjs';
 export class PermissionsService {
   private localStorageService = inject(LocalStorageService);
 
-  hasPermission(permission: string): boolean {
-    const userClaims = this.localStorageService.parseJSON<{ permissions: string[] }>(
-      USER_CLAIMS_STORAGE_KEY,
-    );
-
-    return userClaims ? userClaims.permissions.includes(permission) : false;
-  }
-
-  hasPermissions(permissions: string[]): boolean {
-    const userClaims = this.localStorageService.parseJSON<{ permissions: string[] }>(
+  hasPermission(permissionName: string): boolean {
+    const userClaims = this.localStorageService.parseJSON<{ permissions: Permission[] }>(
       USER_CLAIMS_STORAGE_KEY,
     );
 
     return userClaims
-      ? userClaims.permissions.some((permission) => permissions.includes(permission))
+      ? userClaims.permissions.map((permission) => permission.name).includes(permissionName)
+      : false;
+  }
+
+  hasPermissions(permissionNames: string[]): boolean {
+    const userClaims = this.localStorageService.parseJSON<{ permissions: Permission[] }>(
+      USER_CLAIMS_STORAGE_KEY,
+    );
+
+    return userClaims
+      ? userClaims.permissions.some((permission) => permissionNames.includes(permission.name))
       : false;
   }
 
