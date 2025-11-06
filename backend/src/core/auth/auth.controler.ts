@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import * as jwt from "jsonwebtoken";
 import { UsersService } from "@/core/users/users.service";
 import { LoginCredentials } from "./auth.interface";
-import { UserClaims } from "../users/user.interface";
+import { UserClaimsDto } from "../users/user.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -30,7 +30,7 @@ export class AuthController {
     }
 
     try {
-      const user = await this.usersService.findUserByEmail(email);
+      const user = await this.usersService.findByEmail(email);
 
       if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
@@ -48,7 +48,7 @@ export class AuthController {
         { expiresIn: "1h" }
       );
 
-      const userClaims: UserClaims = {
+      const userClaims: UserClaimsDto = {
         user: {
           id: user.id!,
           name: user.name,

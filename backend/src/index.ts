@@ -6,6 +6,7 @@ import { AuthController } from "./core/auth/auth.controler";
 import { authGuard } from "./middlewares/auth.middleware";
 import "reflect-metadata";
 import db from "./infrastructure/persistence/AppDataSource";
+import { OrganizationalUnitController } from "./core/organizational-units/OrganizationalUnitController";
 
 dotenv.config();
 
@@ -18,10 +19,12 @@ app.use(cors());
 // Controllers instantiation
 const usersController = new UsersController();
 const authController = new AuthController();
+const organizationalUnitController = new OrganizationalUnitController();
 
 // Routes
 app.use("/api/users", authGuard, usersController.router);
 app.use("/api/notifications", authGuard, (req, res) => []);
+app.use("/api/modules", authGuard, organizationalUnitController.router);
 app.use("/api/auth", authController.router);
 
 async function main() {

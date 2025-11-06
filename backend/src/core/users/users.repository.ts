@@ -1,9 +1,9 @@
 import { UserEntity } from "@/infrastructure/persistence/entities/UserEntity";
 import { IRepository } from "@/shared/contracts/IRepository";
-import { User } from "./user";
 import db from "@/infrastructure/persistence/AppDataSource";
 import { NotFoundException } from "@/shared/exceptions/NotFoundException";
 import { Repository } from "typeorm";
+import { User } from "./user";
 
 export class UsersRepository implements IRepository<UserEntity, User> {
   userRepo: Repository<UserEntity>;
@@ -46,6 +46,23 @@ export class UsersRepository implements IRepository<UserEntity, User> {
     const userEntity = await this.userRepo.findOne({
       where: {
         email: email,
+      },
+      relations: {
+        organizationalUnit: true,
+      },
+    });
+
+    if (!userEntity) {
+      throw new NotFoundException("user");
+    }
+
+    return this.toDomain(userEntity);
+  }
+
+  async getById(id: string): Promise<User> {
+    const userEntity = await this.userRepo.findOne({
+      where: {
+        id: id,
       },
       relations: {
         organizationalUnit: true,

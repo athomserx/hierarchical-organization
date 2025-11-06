@@ -49,8 +49,14 @@ export class UsersService {
   //   // return this.usersRepository.findById(id);
   // }
 
-  public async findUserByEmail(email: string): Promise<User> {
+  public async findByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.getByEmail(email);
+
+    return user;
+  }
+
+  public async findById(id: string): Promise<User> {
+    const user = await this.usersRepository.getById(id);
 
     return user;
   }

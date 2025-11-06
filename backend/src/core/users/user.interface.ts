@@ -1,5 +1,4 @@
 import { OrganizationalUnit } from "@/core/organizational-units/OrganizationalUnit";
-import { User } from "./user";
 
 export interface UserProps {
   id?: string;
@@ -29,7 +28,7 @@ export interface UserResponseDto {
   organizationalUnitId: string;
 }
 
-export interface UserClaims {
+export interface UserClaimsDto {
   user: UserResponseDto;
   permissions: string[];
 }
