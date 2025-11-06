@@ -36,12 +36,10 @@ export class PermissionsRepository
       relations: { permission: true },
     });
 
-    const a = (await userPermissions).map(
+    // I think there should be a UserPermission class and a repo that allows the mapper functionality
+    // but in this case, I will let it as is it
+    return (await userPermissions).map(
       (userPermission) => userPermission.permission
     );
-
-    console.log(a);
-
-    return a;
   }
 }
