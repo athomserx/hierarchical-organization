@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { API_URL } from '@/constants/injection-tokens';
 import { LoginCredentials, AuthResponse } from '@/auth/auth.interface';
 import { TOKEN_STORAGE_KEY } from '@/constants/storage-keys';
+import { LocalStorageService } from '@/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +12,7 @@ import { TOKEN_STORAGE_KEY } from '@/constants/storage-keys';
 export class AuthService {
   private http = inject(HttpClient);
   private apiUrl = inject(API_URL);
-  private cookies = inject(CookieService);
-  private readonly cookieOptions = {
-    sameSite: 'Lax' as const,
-  };
+  private localStorageService = inject(LocalStorageService);
 
   login(user: LoginCredentials): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, user).pipe(
@@ -28,7 +25,9 @@ export class AuthService {
   }
 
   logout() {
-    this.cookies.delete(TOKEN_STORAGE_KEY);
+    return of(() => {
+      this.localStorageService.removeItem(TOKEN_STORAGE_KEY);
+    });
   }
 
   isLoggedIn(): boolean {
@@ -36,10 +35,11 @@ export class AuthService {
   }
 
   setToken(token: string) {
-    this.cookies.set(TOKEN_STORAGE_KEY, token, this.cookieOptions);
+    // I was using cookies but due to an issue with it and the lack of time, I replaced it for localStorage
+    this.localStorageService.setItem(TOKEN_STORAGE_KEY, token);
   }
 
   getToken() {
-    return this.cookies.get(TOKEN_STORAGE_KEY);
+    return this.localStorageService.getItem(TOKEN_STORAGE_KEY);
   }
 }

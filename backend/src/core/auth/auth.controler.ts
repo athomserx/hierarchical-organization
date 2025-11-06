@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import * as jwt from "jsonwebtoken";
 import { UsersService } from "@/core/users/users.service";
 import { LoginCredentials } from "./auth.interface";
+import { UserClaims } from "../users/user.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -47,8 +48,21 @@ export class AuthController {
         { expiresIn: "1h" }
       );
 
+      const userClaims: UserClaims = {
+        user: {
+          id: user.id!,
+          name: user.name,
+          lastName: user.lastName,
+          bloodType: user.bloodType,
+          email: user.email,
+          organizationalUnitId: user.organizationalUnit.id,
+        },
+        permissions: [],
+      };
+
       return res.status(200).json({
-        token: token,
+        token,
+        userClaims,
       });
     } catch (error) {
       console.error("Error while trying to login", error);

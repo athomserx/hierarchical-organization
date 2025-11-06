@@ -5,6 +5,7 @@ import { UsersController } from "./core/users/user.controller";
 import { AuthController } from "./core/auth/auth.controler";
 import { authGuard } from "./middlewares/auth.middleware";
 import "reflect-metadata";
+import db from "./infrastructure/persistence/AppDataSource";
 
 dotenv.config();
 
@@ -23,6 +24,16 @@ app.use("/api/users", authGuard, usersController.router);
 app.use("/api/notifications", authGuard, (req, res) => []);
 app.use("/api/auth", authController.router);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+async function main() {
+  try {
+    await db.initialize();
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Error during Data Source initialization:", error);
+    process.exit(1);
+  }
+}
+
+main();

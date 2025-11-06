@@ -47,6 +47,9 @@ export class UsersRepository implements IRepository<UserEntity, User> {
       where: {
         email: email,
       },
+      relations: {
+        organizationalUnit: true,
+      },
     });
 
     if (!userEntity) {

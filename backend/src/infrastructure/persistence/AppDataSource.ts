@@ -15,13 +15,7 @@ const db = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [
-    NotificationEntity,
-    OrganizationalUnitEntity,
-    UserEntity,
-    UnitPermissionEntity,
-    PermissionEntity,
-  ],
+  entities: ["./src/infrastructure/persistence/entities/*.ts"],
   migrations: ["./src/infrastructure/persistence/migrations/*.ts"],
   migrationsTableName: "migrations",
 });
