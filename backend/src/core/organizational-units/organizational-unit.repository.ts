@@ -18,6 +18,7 @@ export class OrganizationalUnitRepository
       id: entity.id,
       name: entity.name,
       parent: entity.parent,
+      permissions: entity.permissions,
     });
   }
 
@@ -36,10 +37,14 @@ export class OrganizationalUnitRepository
   ): Promise<OrganizationalUnit[]> {
     const entity = await this.repo.findOne({
       where: { id: organizationalUnitId },
+      relations: {
+        permissions: true,
+      },
       select: {
         id: true,
         name: true,
         parentId: true,
+        permissions: true,
       },
     });
 
@@ -54,9 +59,10 @@ export class OrganizationalUnitRepository
       const children = await this.repo.find({
         where: { parent: { id: unit.id } },
         relations: { parent: true, permissions: true },
+        select: {
+          permissions: true,
+        },
       });
-
-      console.log(children);
 
       const domainChildren = children.map((child) => this.toDomain(child));
       acc.push(...domainChildren);
