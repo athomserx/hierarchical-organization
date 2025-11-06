@@ -12,6 +12,6 @@
 O en su defecto: `npm run prepare-db`, que agrupa los comandos anteriores (este no lo probé en su momento, pero debería funcionar igual)
 
 ## Ejecutando el proyecto
-Estas son las credenciales de prueba para iniciar sesión como el usuario administrador, sólo está disponible el módulo de los niveles de la organización
-admin@admin.com
+Estas son las credenciales de prueba para iniciar sesión como el usuario administrador, sólo está disponible el módulo de los niveles de la organización:
+admin@admin.com,
 123456
