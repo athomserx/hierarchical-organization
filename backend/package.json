@@ -11,6 +11,7 @@
     "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/infrastructure/persistence/AppDataSource.ts",
     "migration:revert": "npx ts-node ./node_modules/.bin/typeorm migration:revert -- -d ./src/infrastructure/persistence/AppDataSource.ts",
     "seed": "ts-node src/infrastructure/persistence/seeders/initialSeed.ts",
+    "prepare-db": "npm run migration:generate && npm run migration:run && npm run seed",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

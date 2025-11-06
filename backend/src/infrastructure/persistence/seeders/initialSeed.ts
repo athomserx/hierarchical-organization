@@ -5,6 +5,7 @@ import { PermissionEntity } from "../entities/PermissionEntity";
 import { UserEntity } from "../entities/UserEntity";
 import { OrganizationalUnitEntity } from "../entities/OrganizationalUnitEntity";
 import { UnitPermissionEntity } from "../entities/UnitPermissionEntity";
+import { UserPermissionsEntity } from "../entities/UserPermissionsEntity";
 
 const permissions = [
   { id: uuidv7(), name: "view_hierarchy" },
@@ -35,6 +36,11 @@ const unitPermissions = permissions.map((permission) => ({
   permissionId: permission.id,
 }));
 
+const userPermissions = permissions.map((permission) => ({
+  userId: adminUser.id,
+  permissionId: permission.id,
+}));
+
 /**
  * Seeds the initial data (Permissions and Admin User).
  */
@@ -46,6 +52,7 @@ async function runSeeders() {
     const userRepo = db.getRepository(UserEntity);
     const organizationRepo = db.getRepository(OrganizationalUnitEntity);
     const unitPermissionRepo = db.getRepository(UnitPermissionEntity);
+    const userPermissionRepo = db.getRepository(UserPermissionsEntity);
 
     const organizationEntity = permissionRepo.create(mainOrganizationUnit);
     await organizationRepo.save(organizationEntity);
@@ -62,6 +69,9 @@ async function runSeeders() {
       passwordHash: hashedPassword,
     });
     await userRepo.save(newUser);
+
+    const userPermissionEntities = userPermissionRepo.create(userPermissions);
+    await userPermissionRepo.save(userPermissionEntities);
   } catch (error) {
     console.error("Seeding failed:", error);
   } finally {

@@ -1,5 +1,6 @@
 import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable } from "typeorm";
 import { OrganizationalUnitEntity } from "./OrganizationalUnitEntity";
+import { UserEntity } from "./UserEntity";
 
 @Entity("permissions")
 export class PermissionEntity {
@@ -22,4 +23,18 @@ export class PermissionEntity {
     },
   })
   organizationalUnits!: OrganizationalUnitEntity[];
+
+  @ManyToMany(() => UserEntity, (user) => user.permissions)
+  @JoinTable({
+    name: "user_permissions",
+    joinColumn: {
+      name: "permissionId",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "userId",
+      referencedColumnName: "id",
+    },
+  })
+  users!: UserEntity[];
 }

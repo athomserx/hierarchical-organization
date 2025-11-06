@@ -5,9 +5,11 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
 } from "typeorm";
 import { OrganizationalUnitEntity } from "./OrganizationalUnitEntity";
 import { NotificationEntity } from "./NotificationEntity";
+import { PermissionEntity } from "./PermissionEntity";
 
 @Entity("users")
 export class UserEntity {
@@ -38,4 +40,7 @@ export class UserEntity {
 
   @OneToMany(() => NotificationEntity, (notification) => notification.user)
   notifications!: NotificationEntity[];
+
+  @ManyToMany(() => PermissionEntity, (permission) => permission.users)
+  permissions!: PermissionEntity[];
 }

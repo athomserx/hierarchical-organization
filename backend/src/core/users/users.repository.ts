@@ -21,6 +21,7 @@ export class UsersRepository implements IRepository<UserEntity, User> {
       bloodType: entity.bloodType,
       passwordHash: entity.passwordHash,
       organizationalUnit: entity.organizationalUnit,
+      permissions: entity.permissions,
     });
   }
 
@@ -32,6 +33,7 @@ export class UsersRepository implements IRepository<UserEntity, User> {
       passwordHash: user.passwordHash,
       bloodType: user.bloodType,
       organizationalUnitId: user.organizationalUnit.id,
+      permissions: user.permissions,
     });
   }
 
@@ -49,6 +51,7 @@ export class UsersRepository implements IRepository<UserEntity, User> {
       },
       relations: {
         organizationalUnit: true,
+        permissions: true,
       },
     });
 

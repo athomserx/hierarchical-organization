@@ -1,4 +1,5 @@
 import { OrganizationalUnit } from "@/core/organizational-units/organizational-unit";
+import { Permission } from "../permissions/Permission";
 
 export interface UserProps {
   id?: string;
@@ -8,6 +9,7 @@ export interface UserProps {
   email: string;
   passwordHash: string;
   organizationalUnit: OrganizationalUnit;
+  permissions?: Permission[];
 }
 
 export interface UserRequestDto {
@@ -30,5 +32,5 @@ export interface UserResponseDto {
 
 export interface UserClaimsDto {
   user: UserResponseDto;
-  permissions: string[];
+  permissions: Permission[];
 }

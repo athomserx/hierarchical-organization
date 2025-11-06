@@ -1,10 +1,5 @@
 import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
-import { NotificationEntity } from "./entities/NotificationEntity";
-import { OrganizationalUnitEntity } from "./entities/OrganizationalUnitEntity";
-import { UserEntity } from "./entities/UserEntity";
-import { UnitPermissionEntity } from "./entities/UnitPermissionEntity";
-import { PermissionEntity } from "./entities/PermissionEntity";
 
 dotenv.config();
 

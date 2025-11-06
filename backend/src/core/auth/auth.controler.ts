@@ -57,7 +57,7 @@ export class AuthController {
           email: user.email,
           organizationalUnitId: user.organizationalUnit.id,
         },
-        permissions: [],
+        permissions: user.permissions,
       };
 
       return res.status(200).json({
