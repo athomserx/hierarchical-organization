@@ -1,5 +1,6 @@
 import { PERMISSIONS } from '@/constants/permissions';
 import { OrganizationModule } from '@/interfaces/modules.interface';
+import { Permission } from '@/interfaces/permissions.interface';
 import { ModulesService } from '@/services/api/modules.service';
 import { PermissionsService } from '@/services/permissions.service';
 import { NgClass } from '@angular/common';
@@ -33,12 +34,8 @@ export class HierarchyModules implements OnInit {
     });
   }
 
-  getPermissionsString(permissions: string[]) {
-    const permissionsString = permissions.reduce((acc, current) => {
-      return acc + ' ' + current;
-    });
-
-    return permissionsString;
+  getPermissionsString(permissions: Permission[]) {
+    return permissions.map((p) => p.name).join(' | ');
   }
 
   deleteModule(moduleId: string) {

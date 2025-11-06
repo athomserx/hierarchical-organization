@@ -1,9 +1,4 @@
-export interface ModulePermission {
-  id: string;
-  moduleName: string;
-}
-
-export interface UserPermission {
+export interface Permission {
   id: string;
   name: string;
 }

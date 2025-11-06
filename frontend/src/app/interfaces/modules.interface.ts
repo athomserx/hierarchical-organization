@@ -1,8 +1,14 @@
+import { Permission } from './permissions.interface';
+
 export interface OrganizationModule {
   id: string;
   name: string;
   parentId: string;
-  permissions: string[];
+  permissions: Permission[];
 }
 
-export type OrganizationModuleSubmit = Omit<OrganizationModule, 'id'>;
+export interface OrganizationModuleSubmit {
+  name: string;
+  parentId: string;
+  permissions: string[];
+}

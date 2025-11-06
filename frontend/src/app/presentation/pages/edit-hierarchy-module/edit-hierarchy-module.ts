@@ -1,5 +1,5 @@
 import { OrganizationModule, OrganizationModuleSubmit } from '@/interfaces/modules.interface';
-import { UserPermission } from '@/interfaces/permissions.interface';
+import { Permission } from '@/interfaces/permissions.interface';
 import { ModulesService } from '@/services/api/modules.service';
 import { PermissionApiService } from '@/services/api/permission-api.service';
 import { NgClass } from '@angular/common';
@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './edit-hierarchy-module.scss',
 })
 export class EditHierarchyModule implements OnInit {
-  userPermissions = signal<UserPermission[]>([]);
+  userPermissions = signal<Permission[]>([]);
   moduleId = signal<string | null>(null);
   parentModuleId = signal<string | null>(null);
   isEditionMode = computed(() => (this.moduleId() ? true : false));
@@ -51,7 +51,7 @@ export class EditHierarchyModule implements OnInit {
     this.modulesService.getById(moduleId).subscribe({
       next: (module: OrganizationModule) => {
         this.moduleName.set(module.name);
-        this.modulePermissions.set(module.permissions);
+        this.modulePermissions.set(module.permissions.map((elem) => elem.name));
         this.parentModuleId.set(module.parentId);
       },
       error: () => console.error(`Error fetching module with ID: ${moduleId}`),
